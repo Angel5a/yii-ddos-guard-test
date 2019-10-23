@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Service */
+/* @var $allTypes array */
+/* @var $allUsers array */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -12,9 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'type_id')->dropdownList($allTypes, ['prompt'=>Yii::t('service', 'Select Type')]) ?>
 
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'user_id')->dropdownList($allUsers, ['prompt'=>Yii::t('service', 'Select User')]) ?>
 
     <?= $form->field($model, 'ip')->textInput(['maxlength' => true]) ?>
 

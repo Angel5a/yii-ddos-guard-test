@@ -17,8 +17,9 @@ class ServiceSearch extends Service
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['type', 'ip', 'domain'], 'safe'],
+            //[['id'], 'integer'],
+            [['user_id', 'type_id'], 'integer'],
+            //[['ip', 'domain'], 'safe'],
         ];
     }
 
@@ -43,6 +44,7 @@ class ServiceSearch extends Service
         $query = Service::find();
 
         // add conditions that should always apply here
+        $query->with('user');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,10 +62,10 @@ class ServiceSearch extends Service
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'type_id' => $this->type_id,
         ]);
 
-        $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'ip', $this->ip])
+        $query->andFilterWhere(['like', 'ip', $this->ip])
             ->andFilterWhere(['like', 'domain', $this->domain]);
 
         return $dataProvider;

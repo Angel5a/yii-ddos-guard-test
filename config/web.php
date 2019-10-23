@@ -4,7 +4,8 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'DDoS-Guard test',
+    'id' => 'ddos_guard_test',
+    'name' => 'DDoS-Guard Test',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -59,7 +60,7 @@ $config = [
             ],
         ],
     ],
-    'language' => 'ru-RU',
+    //'language' => 'ru-RU',
     'params' => $params,
 ];
 

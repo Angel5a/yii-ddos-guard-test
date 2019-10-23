@@ -5,9 +5,12 @@ namespace app\controllers;
 use Yii;
 use app\models\Service;
 use app\models\ServiceSearch;
+use app\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * ServiceController implements the CRUD actions for Service model.
@@ -20,6 +23,15 @@ class ServiceController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -38,22 +50,15 @@ class ServiceController extends Controller
         $searchModel = new ServiceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $allTypes = Service::allTypeNames();
+        $users = User::find()->all();
+        $allUsers = ArrayHelper::map($users,'id','fullName');
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Service model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+            'allTypes' => $allTypes,
+            'allUsers' => $allUsers,
         ]);
     }
 
@@ -67,11 +72,17 @@ class ServiceController extends Controller
         $model = new Service();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
+
+        $allTypes = Service::allTypeNames();
+        $users = User::find()->all();
+        $allUsers = ArrayHelper::map($users,'id','fullName');
 
         return $this->render('create', [
             'model' => $model,
+            'allTypes' => $allTypes,
+            'allUsers' => $allUsers,
         ]);
     }
 
@@ -87,11 +98,17 @@ class ServiceController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
+
+        $allTypes = Service::allTypeNames();
+        $users = User::find()->all();
+        $allUsers = ArrayHelper::map($users,'id','fullName');
 
         return $this->render('update', [
             'model' => $model,
+            'allTypes' => $allTypes,
+            'allUsers' => $allUsers,
         ]);
     }
 

@@ -14,8 +14,8 @@ class m191023_140759_create_users_table extends Migration
     {
         $this->createTable('{{%users}}', [
             'id' => $this->primaryKey(),
-            'firstname' => $this->string()->notNull(),
-            'lastname' => $this->string()->notNull(),
+            'first_name' => $this->string()->notNull(),
+            'last_name' => $this->string()->notNull(),
         ]);
     }
 

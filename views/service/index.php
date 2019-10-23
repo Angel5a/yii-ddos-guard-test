@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+        <?= Html::a(Yii::t('service', 'Create User'), ['user/create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Yii::t('service', 'Create Service'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -24,15 +25,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'user_id',
-            'type',
+            [
+                'attribute' => 'type_id',
+                'value' => 'typeName',
+                'filter' => Html::activeDropDownList($searchModel, 'type_id', $allTypes, ['class'=>'form-control','prompt' => Yii::t('service', 'Select Type')]),
+            ],
+            [
+                'attribute' => 'user_id',
+                'value' => 'userName',
+                'filter' => Html::activeDropDownList($searchModel, 'user_id', $allUsers, ['class'=>'form-control','prompt' => Yii::t('service', 'Select User')]),
+            ],
             'ip',
             'domain',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=> Yii::t('service', 'Action'),
+                'template' => '{update} {delete}',
+            ],
         ],
     ]); ?>
 

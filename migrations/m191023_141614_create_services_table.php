@@ -18,7 +18,7 @@ class m191023_141614_create_services_table extends Migration
         $this->createTable('{{%services}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
-            'type' => $this->string(10)->notNull(),
+            'type_id' => $this->integer()->notNull(),
             'ip' => $this->string(16)->notNull(),
             'domain' => $this->string()->notNull(),
         ]);

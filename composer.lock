@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05251a4beeaa8dfa7849f73389718d5f",
+    "content-hash": "19e9a922810e853ba971bdfac8102083",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -328,6 +328,60 @@
                 "html"
             ],
             "time": "2019-07-14T18:58:38+00:00"
+        },
+        {
+            "name": "kdn/yii2-domain-validator",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dmitry-kulikov/yii2-domain-validator.git",
+                "reference": "b92b3000c295ef0b4988756014cd0b4fab870858"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dmitry-kulikov/yii2-domain-validator/zipball/b92b3000c295ef0b4988756014cd0b4fab870858",
+                "reference": "b92b3000c295ef0b4988756014cd0b4fab870858",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "2.*"
+            },
+            "require-dev": {
+                "phpunit/php-invoker": "1.*",
+                "phpunit/phpunit": "4.*"
+            },
+            "suggest": {
+                "ext-intl": "this extension is needed for IDN support and to run all tests, otherwise some tests will be skipped",
+                "ext-runkit": "this extension is needed to run all tests, otherwise some tests will be skipped"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kdn\\yii2\\validators\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Kulikov",
+                    "email": "kulikovdn@gmail.com"
+                }
+            ],
+            "description": "Domain name validator for Yii 2.",
+            "homepage": "https://github.com/dmitry-kulikov/yii2-domain-validator",
+            "keywords": [
+                "domain",
+                "extension",
+                "validator",
+                "yii2"
+            ],
+            "time": "2019-06-11T23:46:25+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

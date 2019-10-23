@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "users".
  *
  * @property int $id
- * @property string $firstname
- * @property string $lastname
+ * @property string $first_name
+ * @property string $last_name
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -27,8 +27,8 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['firstname', 'lastname'], 'required'],
-            [['firstname', 'lastname'], 'string', 'max' => 255],
+            [['first_name', 'last_name'], 'required'],
+            [['first_name', 'last_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,8 +39,19 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('user', 'ID'),
-            'firstname' => Yii::t('user', 'First name'),
-            'lastname' => Yii::t('user', 'Last name'),
+            'first_name' => Yii::t('user', 'First Name'),
+            'last_name' => Yii::t('user', 'Last Name'),
         ];
+    }
+
+
+    public function getFullName()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
+    public function getService()
+    {
+        return $this->hasMany(Service::className(), ['user_id' => 'id'])->inverseOf('user');
     }
 }
