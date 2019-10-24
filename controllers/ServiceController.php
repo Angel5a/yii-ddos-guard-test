@@ -97,15 +97,12 @@ class ServiceController extends Controller
      */
     public function actionUpdate($id)
     {
-        // TODO: Need to solve edit links in GridView after pjax request
-        //       (they works as usual links, not .modal-update-link)
-        // TODO: Close Modal and update GridView after success save via pjax.
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //if (Yii::$app->request->isAjax) {
-            //    return "Done";//return $this->actionIndex();
-            //}
+            if (Yii::$app->request->isAjax) {
+                return "Done";//return $this->actionIndex();
+            }
             return $this->redirect(['index']);
         }
         

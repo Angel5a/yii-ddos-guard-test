@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(['id' => 'pjax-container-service-index']); ?>
 
         <?= GridView::widget([
+            'id' => 'service-index-gridview',
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'columns' => [
@@ -70,16 +71,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 
     <?php $this->registerJs(
-        "$(function(){
-            $('.modal-update-link').click(function (e) {
+        '$(function(){
+            $(".modal-update-link").click(function (e) {
                 e.preventDefault();
-                var container = $('#modalContent');
-                container.html('" . Yii::t('service', 'Please wait, the data is being loading...') . "');
-                $('#modal').modal('show')
-                        .find(container)
-                        .load($(this).attr('href'));
+                var container = $("#modalContent");
+                container.html("' . Yii::t('service', 'Please wait, the data is being loading...') . '");
+                $("#modal").modal("show").find(container).load($(this).attr("href"));
             });
-        });"
+        });'
+    ); ?>
+
+    <?php $this->registerJs(
+        '$("document").ready(function(){ 
+            $("#pjax-container-service-index").on("pjax:end", function () {
+                $(".modal-update-link").click(function (e) {
+                    e.preventDefault();
+                    var container = $("#modalContent");
+                    container.html("' . Yii::t('service', 'Please wait, the data is being loading...') . '");
+                    $("#modal").modal("show").find(container).load($(this).attr("href"));
+                });
+            });
+        });'
     ); ?>
 
     <?php Modal::begin([
