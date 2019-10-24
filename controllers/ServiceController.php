@@ -54,7 +54,9 @@ class ServiceController extends Controller
         $users = User::find()->all();
         $allUsers = ArrayHelper::map($users,'id','fullName');
 
-        return $this->render('index', [
+        $method = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
+
+        return $this->$method('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'allTypes' => $allTypes,
@@ -95,21 +97,35 @@ class ServiceController extends Controller
      */
     public function actionUpdate($id)
     {
+        // TODO: Need to solve edit links in GridView after pjax request
+        //       (they works as usual links, not .modal-update-link)
+        // TODO: Close Modal and update GridView after success save via pjax.
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //if (Yii::$app->request->isAjax) {
+            //    return "Done";//return $this->actionIndex();
+            //}
             return $this->redirect(['index']);
         }
-
+        
         $allTypes = Service::allTypeNames();
         $users = User::find()->all();
         $allUsers = ArrayHelper::map($users,'id','fullName');
 
-        return $this->render('update', [
-            'model' => $model,
-            'allTypes' => $allTypes,
-            'allUsers' => $allUsers,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('updateModal', [
+                'model' => $model,
+                'allTypes' => $allTypes,
+                'allUsers' => $allUsers,
+            ]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+                'allTypes' => $allTypes,
+                'allUsers' => $allUsers,
+            ]);
+        }
     }
 
     /**
@@ -121,9 +137,16 @@ class ServiceController extends Controller
      */
     public function actionDelete($id)
     {
+        // No client side update/delete. See https://github.com/yiisoft/yii2/issues/15723
+        // It is still possible to remove table row via javascript, but sorting/pages/etc
+        // would be broken. So better to use simple Pjax widget as more user friendly.
+
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        if (Yii::$app->request->isAjax)
+            return $this->actionIndex();
+        else
+            return $this->redirect(['index']);
     }
 
     /**

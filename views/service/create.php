@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'allTypes' => $allTypes,
         'allUsers' => $allUsers,
+        'usePjax' => false,
     ]) ?>
 
 </div>

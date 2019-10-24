@@ -44,10 +44,25 @@ class ServiceSearch extends Service
         $query = Service::find();
 
         // add conditions that should always apply here
-        $query->with('user');
+        //$query->with('user');
+        $query->joinWith(['user']); // for sorting
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+        ]);
+        
+        $dataProvider->setSort([
+            'attributes' => [
+                'id',
+                'type_id',
+                'user_id' => [
+                    'asc' => [User::tableName().'.first_name' => SORT_ASC, User::tableName().'.last_name' => SORT_ASC],
+                    'desc' => [User::tableName().'.first_name' => SORT_DESC, User::tableName().'.last_name' => SORT_DESC],
+                    //'label' => 'Country Name'
+                ],
+                'ip',
+                'domain'
+            ],
         ]);
 
         $this->load($params);

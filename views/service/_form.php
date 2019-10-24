@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="service-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['id' => 'service-edit-form', 'data-pjax' => isset($usePjax)?$usePjax:false]]); ?>
 
     <?= $form->field($model, 'type_id')->dropdownList($allTypes, ['prompt'=>Yii::t('service', 'Select Type')]) ?>
 
