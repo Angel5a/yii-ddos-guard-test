@@ -49,18 +49,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         'update' => function($url, $dataProvider, $key) {
                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                //'value'=>Yii::$app->urlManager->createUrl('example/update?id='.$key),
                                 'class'=> 'modal-update-link',
                                 'title' => Yii::t('yii', 'Update'),
-                                'data-pjax' => '1',
+                                'data-pjax' => '0',
                             ]);
                         },
                         'delete' => function ($url, $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                'class'=> 'modal-delete-link',
                                 'title' => Yii::t('yii', 'Delete'),
                                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                 'data-method' => 'post',
-                                'data-pjax' => '1',
+                                'data-pjax' => '0',
                             ]);
                         },
                     ],
@@ -89,6 +89,42 @@ $this->params['breadcrumbs'][] = $this->title;
                     var container = $("#modalContent");
                     container.html("' . Yii::t('service', 'Please wait, the data is being loading...') . '");
                     $("#modal").modal("show").find(container).load($(this).attr("href"));
+                });
+            });
+        });'
+    ); ?>
+
+    <?php $this->registerJs(
+        '$(function(){
+            $(".modal-delete-link").click(function (e) {
+                e.preventDefault();
+                var msg = $(this).data("confirm") || null;
+                if (!msg || confirm(msg)) {
+                    $.ajax($(this).attr("href"), {
+                        type: $(this).data("method") || "POST"
+                    }).done(function(data) {
+                        $("#service-index-gridview").yiiGridView("applyFilter");
+                    });
+                }
+                return false;
+            });
+        });'
+    ); ?>
+
+    <?php $this->registerJs(
+        '$("document").ready(function(){ 
+            $("#pjax-container-service-index").on("pjax:end", function () {
+                $(".modal-delete-link").click(function (e) {
+                    e.preventDefault();
+                    var msg = $(this).data("confirm") || null;
+                    if (!msg || confirm(msg)) {
+                        $.ajax($(this).attr("href"), {
+                            type: $(this).data("method") || "POST"
+                        }).done(function(data) {
+                            $("#service-index-gridview").yiiGridView("applyFilter");
+                        });
+                    }
+                    return false;
                 });
             });
         });'
