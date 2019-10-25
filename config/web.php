@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'ddos_guard_test',
-    'name' => 'DDoS-Guard Test',
+    'name' => 'DDoS-GUARD Test',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
