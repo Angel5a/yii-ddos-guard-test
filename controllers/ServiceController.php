@@ -141,7 +141,7 @@ class ServiceController extends Controller
         $this->findModel($id)->delete();
 
         if (Yii::$app->request->isAjax)
-            return $this->actionIndex();
+            return "Done";//return $this->actionIndex();
         else
             return $this->redirect(['index']);
     }
